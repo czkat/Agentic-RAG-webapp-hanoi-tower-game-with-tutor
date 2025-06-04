@@ -419,27 +419,41 @@
     <script src="EducationalChatbot.js"></script>
     <script src="chatbot.js"></script>
     
-    <script>
-        // Simple initialization and integration code
-        document.addEventListener('DOMContentLoaded', function() {
-            // Initialize components if they exist in the JS files
-            if (typeof initializeGame === 'function') {
-                initializeGame();
-            }
-            
-            if (typeof initializeChatbot === 'function') {
-                initializeChatbot();
-            }
-            
-            if (typeof setupEventListeners === 'function') {
-                setupEventListeners();
-            }
+    <!-- Replace the script section at the bottom with: -->
+    <script type="module">
+        import { Game } from './Game.js';
+        import { EducationalChatbot } from './EducationalChatbot.js';
+        import { AgenticRAGAgent } from './AgenticRAGAgent.js';
 
-            // Tutorial close function (if not defined in other files)
-            window.closeTutorial = function() {
-                document.getElementById('tutorialOverlay').style.display = 'none';
-            };
+        document.addEventListener('DOMContentLoaded', () => {
+            const game = new Game();
+            const agent = new AgenticRAGAgent();
+            const chatbot = new EducationalChatbot(game, agent);
+            
+            // Game initialization
+            const diskCountSelect = document.getElementById('diskCount');
+            const newGameBtn = document.getElementById('newGame');
+            const resetBtn = document.getElementById('resetGame');
+            const hintBtn = document.getElementById('showHint');
+            const tutorialBtn = document.getElementById('showTutorial');
+            
+            function initializeGame() {
+                game.initializeGame(parseInt(diskCountSelect.value));
+            }
+            
+            newGameBtn.addEventListener('click', initializeGame);
+            resetBtn.addEventListener('click', initializeGame);
+            hintBtn.addEventListener('click', () => game.showHint());
+            tutorialBtn.addEventListener('click', () => {
+                document.getElementById('tutorialOverlay').style.display = 'flex';
+            });
+            
+            initializeGame();
         });
+        
+        window.closeTutorial = function() {
+            document.getElementById('tutorialOverlay').style.display = 'none';
+        };
     </script>
 </body>
 </html>
