@@ -25,6 +25,33 @@ class Game {
         
         // Initialize the game
         this.initializeGame(this.totalDisks);
+
+        document.querySelectorAll('.rod').forEach(rod => {
+        rod.addEventListener('dragover', this.handleDragOver.bind(this));
+        rod.addEventListener('drop', this.handleDrop.bind(this));
+    });
+    }
+
+    handleDragOver(e) {
+        e.preventDefault();
+    }
+
+    handleDrop(e) {
+        e.preventDefault();
+        const targetRod = parseInt(e.target.closest('.rod').dataset.rod);
+        const diskSize = parseInt(e.dataTransfer.getData('text/plain'));
+        
+        // Find source rod
+        let sourceRod = -1;
+        this.towers.forEach((tower, index) => {
+            if (tower.getTopDiskSize() === diskSize) {
+                sourceRod = index;
+            }
+        });
+        
+        if (sourceRod !== -1) {
+            this.moveDisk(sourceRod, targetRod);
+        }
     }
     
     setupEventHandlers() {
@@ -55,6 +82,20 @@ class Game {
         });
     }
     
+    renderDisks() {
+        this.towers.forEach((tower, index) => {
+            const rod = document.querySelector(`.rod[data-rod="${index}"]`);
+            rod.innerHTML = `<div class="rod-label">${['Source', 'Auxiliary', 'Destination'][index]}</div>`;
+            
+            tower.disks.forEach(disk => {
+                const diskElement = document.createElement('div');
+                diskElement.className = `disk disk-${disk.size}`;
+                diskElement.style.width = `${40 + (disk.size * 20)}px`;
+                rod.appendChild(diskElement);
+            });
+        });
+    }
+
     initializeGame(diskNumber) {
         this.totalDisks = diskNumber;
         
@@ -84,6 +125,7 @@ class Game {
         
         // Render all towers
         this.render();
+        this.renderDisks();
     }
     
     resetGame() {
@@ -130,7 +172,7 @@ class Game {
             
             return true;
         }
-        
+        this.renderDisks();
         return false;
     }
     
