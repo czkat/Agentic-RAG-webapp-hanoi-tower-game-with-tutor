@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tower of Hanoi</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="header-content">
+            <h1>Tower of Hanoi</h1>
+            <div class="next-game-button">
+                <span>Next Game</span>
+                <div class="arrow">➔</div>
+            </div>
+        </div>
+    </header>
+    
+    <p class="instruction">Goal: The object of the game is to move all the disks over to the destination tower using drag and drop.<br>
+    Rule: You cannot place a larger disk onto a smaller disk</p>
+    <div id="controls">
+        <label for="diskCount">Number of disks:</label>
+        <select id="diskCount">
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+        </select>
+        <button id="reset-btn">Reset</button>
+        <button id="hint-btn">Hint</button>
+        <button id="log-btn">Log</button>
+        <button id="solve-btn">Solve!</button>
+    </div>
+    <div id="game-container">
+        <div id="game">
+            <div class="tower-container" data-index="0">
+                <div class="peg-structure">
+                    <div class="peg"></div>
+                    <div class="base"></div>
+                </div>
+                <div class="tower" data-index="0"></div>
+            </div>
+            <div class="tower-container" data-index="1">
+                <div class="peg-structure">
+                    <div class="peg"></div>
+                    <div class="base"></div>
+                </div>
+                <div class="tower" data-index="1"></div>
+            </div>
+            <div class="tower-container" data-index="2">
+                <div class="peg-structure">
+                    <div class="peg"></div>
+                    <div class="base"></div>
+                </div>
+                <div class="tower" data-index="2"></div>
+            </div>
+        </div>
+        <div id="labels">
+            <div class="label">Source (A)</div>
+            <div class="label">Auxiliary (B)</div>
+            <div class="label">Destination (C)</div>
+        </div>
+    </div>
+    <p id="message"></p>
+    <div id="stats">
+        <p id="moves">Moves: 0</p>
+        <p id="min-moves">Minimum Moves: 7</p>
+    </div>
+    <p id="hint"></p>
+    
+    <div id="log-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Move Log</h2>
+            <div id="log-content" class="unselectable"></div>
+        </div>
+    </div>
+
+    <!-- Load scripts -->
+    <script src="js/Disk.js"></script>
+    <script src="js/Tower.js"></script>
+    <script src="js/Game.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
