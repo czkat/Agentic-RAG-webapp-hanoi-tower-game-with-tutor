@@ -1,7 +1,6 @@
 class Disk {
     constructor(size) {
         this.size = size;
-        this.element = null;
     }
 
     createDiskElement() {
