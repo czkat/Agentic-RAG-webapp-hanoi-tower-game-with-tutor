@@ -5,6 +5,9 @@
     bottom: 20px;
     right: 20px;
     width: 350px;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
     max-height: 500px;
     background: #ffffff;
     border-radius: 16px;
